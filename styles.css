@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    color: #4a4a4a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: background 1s ease-in-out;
+}
+
+/* Dynamic Backgrounds */
+.default-bg { background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); }
+
+
+.container {
+    max-width: 900px;
+    width: 100%;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+h1 {
+    font-weight: 600;
+    font-size: 2.5em;
+    color: #333;
+}
+
+#city-form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#city-input {
+    padding: 12px;
+    width: 60%;
+    border: 1px solid #ddd;
+    border-radius: 25px 0 0 25px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#city-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+#city-form button {
+    padding: 12px 25px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 0 25px 25px 0;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#city-form button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+#dashboard-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.weather-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    text-align: left;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.weather-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.weather-card h2 {
+    margin-top: 0;
+    color: #007bff;
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+.weather-card .temp {
+    font-size: 3em;
+    font-weight: 300;
+    margin: 10px 0;
+    color: #333;
+}
+
+.weather-card .aqi {
+    font-size: 1.2em;
+    font-weight: 600;
+    padding-left: 25px;
+    position: relative;
+}
+
+.aqi::before {
+    content: '☁️';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.aqi.good { color: #28a745; }
+.aqi.moderate { color: #ffc107; }
+.aqi.unhealthy { color: #dc3545; }
+.aqi.hazardous { color: #6f42c1; }
+
+.remove-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #ff4d4d;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s, transform 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.remove-btn:hover {
+    background-color: #e60000;
+    transform: scale(1.1);
+}
+
+/* Extra Details Section */
+.extra-details {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s ease-in-out;
+    padding-top: 10px;
+    margin-top: 10px;
+    border-top: 1px solid #eee;
+}
+.weather-card.expanded .extra-details {
+    max-height: 200px;
+}
+
+/* Loading Indicator */
+#loading-indicator {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    font-style: italic;
+    color: #666;
+}
+.hidden {
+    display: none !important;
+}
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: #007bff;
+    animation: spin 1s ease infinite;
+    margin-right: 10px;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(20px); }
+}
+
+.footer {
+    margin-top: 40px;
+    color: #666;
+    font-size: 0.9em;
+    text-align: center;
+}
