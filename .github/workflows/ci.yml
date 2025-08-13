@@ -12,10 +12,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Change Directory to Project Root
-        run: cd Hackathon-kubernetes
-      
-      # --- LINTING & UNIT TESTS ---
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -30,8 +26,6 @@ jobs:
       - name: Run Unit Tests
         run: npm test
 
-      # --- SAST (Static Application Security Testing) ---
-      # This step uses GitHub's own CodeQL to scan your codebase for vulnerabilities.
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
@@ -40,8 +34,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
 
-      # --- SCA (Software Composition Analysis) & BUILD ---
-      # This step builds the Docker image and scans it for vulnerabilities using Trivy.
       - name: Build Docker Image
         run: docker build . --tag amithpalissery/hackathon:ci
 
@@ -51,4 +43,4 @@ jobs:
           image-ref: 'amithpalissery/hackathon:ci'
           format: 'table'
           output: 'trivy-results.json'
-          exit-code: '1' # Fail if any vulnerabilities are found
+          exit-code: '1'
