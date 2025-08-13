@@ -14,8 +14,6 @@ spec:
     spec:
       containers:
       - name: weather-app
-        # This is the image that GitHub Actions will build and push
-        # The tag will be updated automatically to 'latest'
         image: amithpalissery/hackathon:latest
         ports:
         - containerPort: 80
