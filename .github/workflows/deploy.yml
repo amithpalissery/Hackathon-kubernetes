@@ -1,6 +1,5 @@
 name: CI/CD Pipeline
 
-# This workflow will trigger on every push to the main branch
 on:
   push:
     branches:
@@ -31,7 +30,7 @@ jobs:
       uses: appleboy/ssh-action@v1.0.0
       with:
         host: ${{ secrets.EC2_IP_ADDRESS }}
-        username: ubuntu # Change this if your EC2 user is different
+        username: ubuntu
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           # The commands below are executed on your EC2 instance
@@ -41,7 +40,7 @@ jobs:
 
           # Apply the Kubernetes manifest to update the deployment
           # This command tells Kubernetes to pull the new image and roll out the update
-          kubectl apply -f /home/ubuntu/Hackathon-kubernetes/k8s-manifest.yaml
+          kubectl apply -f /home/ubuntu/k8s-manifest.yaml
 
           # Wait for the deployment to finish rolling out
           kubectl rollout status deployment/weather-app-deployment
