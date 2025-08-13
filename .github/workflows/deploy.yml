@@ -8,6 +8,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: self-hosted
+
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
@@ -25,14 +26,8 @@ jobs:
         push: true
         tags: amithpalissery/hackathon:latest
 
-    - name: Deploy to Kubernetes on EC2
-      uses: appleboy/ssh-action@v1.0.0
-      with:
-        host: ${{ secrets.EC2_IP_ADDRESS }}
-        username: ubuntu
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
-          # The commands below are executed on your EC2 instance
-          docker pull amithpalissery/hackathon:latest
-          kubectl apply -f /home/ubuntu/k8s-manifest.yaml
-          kubectl rollout status deployment/weather-app-deployment
+    - name: Deploy to Kubernetes
+      run: |
+        docker pull amithpalissery/hackathon:latest
+        kubectl apply -f ./k8s-manifest.yaml
+        kubectl rollout status deployment/weather-app-deployment
