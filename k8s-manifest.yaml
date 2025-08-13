@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: weather-app
-        image: amithpalissery/hackathon:latest
+        image: amithpalissery/hackathon:ci
         ports:
         - containerPort: 80
 ---
