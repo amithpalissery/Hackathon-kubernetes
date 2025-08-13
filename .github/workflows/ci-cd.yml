@@ -70,11 +70,11 @@ jobs:
       with:
         context: .
         push: true
-        tags: amithpalissery/hackathon:latest
+        tags: amithpalissery/hackathon:ci
 
     # 📦 Deploy to Kubernetes
     - name: Deploy to Kubernetes
       run: |
-        docker pull amithpalissery/hackathon:latest
+        docker pull amithpalissery/hackathon:ci
         kubectl apply -f ./k8s-manifest.yaml
         kubectl rollout status deployment/weather-app-deployment
