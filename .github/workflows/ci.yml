@@ -12,6 +12,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Change Directory to Project Root
+        run: cd Hackathon-kubernetes
+      
       # --- LINTING & UNIT TESTS ---
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -20,15 +23,12 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
-        working-directory: './Hackathon-kubernetes'
 
       - name: Run ESLint (Linting)
         run: npm run lint
-        working-directory: './Hackathon-kubernetes'
 
       - name: Run Unit Tests
         run: npm test
-        working-directory: './Hackathon-kubernetes'
 
       # --- SAST (Static Application Security Testing) ---
       # This step uses GitHub's own CodeQL to scan your codebase for vulnerabilities.
@@ -43,7 +43,7 @@ jobs:
       # --- SCA (Software Composition Analysis) & BUILD ---
       # This step builds the Docker image and scans it for vulnerabilities using Trivy.
       - name: Build Docker Image
-        run: docker build ./Hackathon-kubernetes -t amithpalissery/hackathon:ci
+        run: docker build . --tag amithpalissery/hackathon:ci
 
       - name: Run Trivy Scanner (SCA)
         uses: aquasecurity/trivy-action@master
