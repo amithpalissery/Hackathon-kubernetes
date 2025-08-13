@@ -4,8 +4,8 @@
   "description": "A weather dashboard application.",
   "main": "script.js",
   "scripts": {
-    "test": "echo \"No tests specified\" && exit 0",
-    "lint": "echo \"No linting specified\" && exit 0"
+    "test": "echo \"Testing complete: No tests configured\"",
+    "lint": "echo \"Linting complete: No linter configured\""
   },
   "author": "amithpalissery",
   "license": "ISC"
