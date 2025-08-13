@@ -8,7 +8,6 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
@@ -34,13 +33,6 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           # The commands below are executed on your EC2 instance
-          
-          # Pull the new image to ensure the latest version is available
           docker pull amithpalissery/hackathon:latest
-
-          # Apply the Kubernetes manifest to update the deployment
-          # This command tells Kubernetes to pull the new image and roll out the update
           kubectl apply -f /home/ubuntu/k8s-manifest.yaml
-
-          # Wait for the deployment to finish rolling out
           kubectl rollout status deployment/weather-app-deployment
