@@ -1,0 +1,51 @@
+name: CI Pipeline - Code Quality and Security
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # --- LINTING & UNIT TESTS ---
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run ESLint (Linting)
+        run: npm run lint
+
+      - name: Run Unit Tests
+        run: npm test
+
+      # --- SAST (Static Application Security Testing) ---
+      # This step uses GitHub's own CodeQL to scan your codebase for vulnerabilities.
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+      # --- SCA (Software Composition Analysis) & BUILD ---
+      # This step builds the Docker image and scans it for vulnerabilities using Trivy.
+      - name: Build Docker Image
+        run: docker build . --tag amithpalissery/hackathon:ci
+
+      - name: Run Trivy Scanner (SCA)
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'amithpalissery/hackathon:ci'
+          format: 'table'
+          output: 'trivy-results.json'
+          exit-code: '1' # Fail if any vulnerabilities are found
