@@ -83,5 +83,5 @@ jobs:
     - name: Run Passive DAST Scan
       uses: zaproxy/action-baseline@v0.10.0
       with:
-        target: 'http://your-app-url.com'  # Replace with your deployed app URL
+        target: 'http://34.201.72.211:30080/'  # Replace with your deployed app URL
         cmd_options: '-config passiveScanOnly=true'
