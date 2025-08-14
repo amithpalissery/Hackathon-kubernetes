@@ -13,29 +13,29 @@ jobs:
       security-events: write
 
     steps:
-    # 🧾 Checkout code
+    #  Checkout code
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    # 🟦 Node.js setup
+    #  Node.js setup
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
 
-    # 📦 Install dependencies
+    #  Install dependencies
     - name: Install Dependencies
       run: npm install
 
-    # 🧹 Linting
+    #  Linting
     - name: Run ESLint
       run: npm run lint
 
-    # 🧪 Unit tests
+    #  Unit tests
     - name: Run Unit Tests
       run: npm test
 
-    # 🔐 CodeQL analysis
+    #  CodeQL analysis
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
@@ -44,11 +44,11 @@ jobs:
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
 
-    # 🐳 Build Docker image for scanning
+    #  Build Docker image for scanning
     - name: Build Docker Image (CI)
       run: docker build . --tag amithpalissery/hackathon:ci
 
-    # 🛡️ Trivy scan
+    #  Trivy scan
     - name: Run Trivy Scanner
       uses: aquasecurity/trivy-action@master
       with:
@@ -57,14 +57,14 @@ jobs:
         output: 'trivy-results.json'
         exit-code: '1'
 
-    # 🔐 Login to Docker Hub
+    #  Login to Docker Hub
     - name: Login to Docker Hub
       uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    # 🚀 Build and push production image
+    #  Build and push production image
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v5
       with:
@@ -72,14 +72,14 @@ jobs:
         push: true
         tags: amithpalissery/hackathon:ci
 
-    # 📦 Deploy to Kubernetes
+    #  Deploy to Kubernetes
     - name: Deploy to Kubernetes
       run: |
         docker pull amithpalissery/hackathon:ci
         kubectl apply -f ./k8s-manifest.yaml
         kubectl rollout status deployment/weather-app-deployment
 
-    # 🛡️ Passive DAST Scan with OWASP ZAP
+    #  Passive DAST Scan with OWASP ZAP
     - name: Run Passive DAST Scan
       uses: zaproxy/action-baseline@v0.10.0
       with:
